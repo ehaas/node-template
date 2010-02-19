@@ -13,16 +13,12 @@ var sys = require("sys"),
     tmpl = require("./template");
 
 var hi_template = tmpl.create("tmpls/hi.template", function(template_function) {
+    var app = [
+        [get(/^\/hi\/(\w+)$/),
+         function(req, res, name) {
+            res.respond(template_function({name:name}));
+         }]
+    ];
 
-var app = [
-
-	   [get(/^\/hi\/(\w+)$/), function(req, res, name) {
-		   res.respond(template_function({name:name}));
-	       }]
-	   
-	       
-	   ];
-
-nerve.create(app).serve();
-
+    nerve.create(app).serve();
 });
