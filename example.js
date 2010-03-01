@@ -10,25 +10,23 @@
 
 var sys = require("sys"),
     nerve = require("./nerve"), /* or path to nerve module */
+    get = nerve.get,
     tmpl = require("./template");
 
-var hi_template = tmpl.tmpl("tmpls/hi.template");
-var hi = function(name) {
-    return hi_template({name:name});
-};
-
 var app = [
+    [get(/^\/hello\/(\w+)$/),
+     function(req, res, name) {
+		sys.puts(name);
+		var hello_template = tmpl.create('tmpls/hello.template', function(template_function) {
+							    res.respond(template_function({name:name}));
+		});
+     }],
+    [get(/^\/hi\/(\w+)$/),
+     function(req, res) {
+		var hi_template = tmpl.create('tmpls/home.template', function(template_function) {
+							    res.respond(template_function({}));
+		});
+     }]
+];
 
-	   [get(/^\/hello\/(\w+)$/), function(req, res, name) {
-		   /* load the template inline */
-		   res.respond(tmpl.tmpl("tmpls/hello.template", {name:name}));
-	       }],
-	   [get(/^\/hi\/(\w+)$/), function(req, res, name) {
-		   /* use the pre-compiled 'hi' template function */
-		   res.respond(hi(name));
-	       }]
-	   
-	       
-	   ];
-
-nerve.create(app, {session_duration: 10*1000}).serve(8009);
+nerve.create(app).listen(8000);
