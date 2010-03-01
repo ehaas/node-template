@@ -12,13 +12,22 @@ var sys = require("sys"),
     get = nerve.get,
     tmpl = require("./template");
 
-var hi_template = tmpl.create("tmpls/hi.template", function(template_function) {
-    var app = [
-        [get(/^\/hi\/(\w+)$/),
-         function(req, res, name) {
-            res.respond(template_function({name:name}));
-         }]
-    ];
+var app = [
+    [get(/^\/hello\/(\w+)$/),
+     function(req, res, name) {
+        sys.puts(name);
+        tmpl.create('tmpls/hello.template',
+                    function(template_function) {
+            res.respond(template_function({name:name}))
+        })
+     }],
+    [get(/^\/hi\/(\w+)$/),
+     function(req, res, name) {
+        tmpl.create('tmpls/home.template',
+                    function(template_function) {
+            res.respond(template_function({name:name}))
+        })
+     }]
+];
 
-    nerve.create(app).serve();
-});
+nerve.create(app).listen(8000);
