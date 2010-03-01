@@ -14,7 +14,8 @@ var fs = require("fs");
 var cache = {};
   
 var create = function(file_name, callback) {
-    fs.readFile(file_name).addCallback(function(file_contents) {
+    fs.readFile(file_name, function(err, data) {
+        if(err) throw err;
         callback(new Function("obj",
             "var p=[],print=function(){p.push.apply(p,arguments);};" +
             "obj=obj||{};" +
@@ -22,16 +23,14 @@ var create = function(file_name, callback) {
             "with(obj){p.push('" +
 
             // Convert the template into pure JavaScript
-            file_contents.replace(/[\r\n\t]/g, " ")
-                         .split("<%").join("\t")
-                         .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                         .replace(/\t=(.*?)%>/g, "',$1,'")
-                         .split("\t").join("');")
-                         .split("%>").join("p.push('")
-                         .split("\r").join("\\'") +
+            data.replace(/[\r\n\t]/g, " ")
+                .split("<%").join("\t")
+                .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+                .replace(/\t=(.*?)%>/g, "',$1,'")
+                .split("\t").join("');")
+                .split("%>").join("p.push('")
+                .split("\r").join("\\'") +
         "');}return p.join('');"));
-    }).addErrback(function(e) {
-        // do something to handle the error
     });
 }
 
