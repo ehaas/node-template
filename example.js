@@ -22,9 +22,9 @@ var app = [
 		});
      }],
     [get(/^\/hi\/(\w+)$/),
-     function(req, res) {
+     function(req, res, name) {
 		var hi_template = tmpl.create('tmpls/home.template', function(template_function) {
-							    res.respond(template_function({}));
+							    res.respond(template_function({name:name}));
 		});
      }]
 ];
