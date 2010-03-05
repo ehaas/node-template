@@ -23,14 +23,14 @@ var create = function(file_name, callback) {
             "with(obj){p.push('" +
 
             // Convert the template into pure JavaScript
-            data.replace(/[\r\n\t]/g, " ")
-                .split("<%").join("\t")
-                .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                .replace(/\t=(.*?)%>/g, "',$1,'")
-                .split("\t").join("');")
+            data.replace(/[\r\t\n]/g, " ")
+                .replace(/'(?=[^%]*%>)/g,"\t")
+                .split("'").join("\\'")
+                .split("\t").join("'")
+                .replace(/<%=(.+?)%>/g, "',$1,'")
+                .split("<%").join("');")
                 .split("%>").join("p.push('")
-                .split("\r").join("\\'") +
-        "');}return p.join('');"));
+        + "');}return p.join('');"));
     });
 }
 
