@@ -26,12 +26,25 @@ Templates can also contain javascript code to be expanded.
 
 ## Usage
 
-To be updated soon.
+There are plenty of ways to use this:
 
+### Simple Usage with a String
+    sys.puts(template.create("Hello <%=word%>!", {word:"world"}));
+    
+### Save the Template for Later
+    var t = template.create("Hello <%=word%>!");
+    sys.puts(t({word:"planet"}));
+    
+### Callbacks
+    template.create("Hello <%=word%>!", {word:kitty"}, function(t) {
+        sys.puts(t);
+    });
+
+## Todo
+
+* Callbacks with non-processed templates. 
+    
 ## Other Info
 
 Templates are cached after the first read from disk. This means that if you change a template file, 
 you will need to restart the node app to see the change take effect.
-
-There is an included example webserver app called example.js which uses the Nerve module to route URI requests.
-You can find the [Nerve module here](http://github.com/gjritter/nerve/).
