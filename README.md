@@ -51,9 +51,6 @@ There are plenty of ways to use this:
     
 ## Other Info
 
-<s>Templates are cached after the first read from disk. This means that if you change a template file, 
-you will need to restart the node app to see the change take effect.</s>
-
-That's a lie. You do not need to restart the node app to see the changes take effect. The reason is
-because it caches strings and not files. This has the downside of filling memory with useless templates until
-you restart the app. This should be fixed in an future version together with auto-cache.
+You do not need to restart the node app to see the changes take effect. The reason is because it caches strings and
+not files. This has the downside of filling memory with useless templates until you restart the app. 
+This should be fixed in a future version together with auto-cache.
