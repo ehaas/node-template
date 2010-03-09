@@ -85,7 +85,7 @@
     sys.puts("Test 10 of " + total_tests + ": Reading complex html file.");
     template.create("complex_html.tmpl", {title: "Complex Test", body: "For loop:", count: 2, msg: false}, function(t) {
         receive_callback();
-        assert.equal(t, "<html>     <head>         <title>Complex Test</title>         <script type=\"text/javascript\">         //<![CDATA[             var message = 'hello world!';         //]]>         </script>     </head>     <body>         For loop:         <br/>                      <span>0,</span>                       <span>1,</span>               </body> </html>");
+        assert.equal(t, "<html>\n    <head>\n        <title>Complex Test</title>\n        <script type=\"text/javascript\">\n        //<![CDATA[\n            var message = 'hello world!';\n        //]]>\n        </script>\n    </head>\n    <body>\n        For loop:\n        <br/>\n        <span>0,</span><span>1,</span>\n    </body>\n</html>\n");
     });
 
     // assert that all callbacks were called within the alloted time and exit

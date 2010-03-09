@@ -1,7 +1,10 @@
-# template.node.js
+# node-template
 
 A templating system for [node.js](http://nodejs.org) based on 
 John Resig's [JavaScript Micro-Templating](http://ejohn.org/blog/javascript-micro-templating/).
+
+Unlike that version (and [Chad Etzel's](http://github.com/jazzychad/template.node.js/)) this one preserves whitespace
+allowing you to use blocks of (and inline) javascript and css in the page. It also has no problem with single quotes.
 
 ## Templates
 
@@ -42,9 +45,15 @@ There are plenty of ways to use this:
 
 ## Todo
 
-* Callbacks with non-processed templates. 
+* Callbacks with non-processed templates.
+* Cache by filename (not string).
+* Auto-cache, reloads the cached file if a change is detected in the file. (This can be turned off on production.) 
     
 ## Other Info
 
-Templates are cached after the first read from disk. This means that if you change a template file, 
-you will need to restart the node app to see the change take effect.
+<s>Templates are cached after the first read from disk. This means that if you change a template file, 
+you will need to restart the node app to see the change take effect.</s>
+
+That's a lie. You do not need to restart the node app to see the changes take effect. The reason is
+because it caches strings and not files. This has the downside of filling memory with useless templates until
+you restart the app. This should be fixed in an future version together with auto-cache.
